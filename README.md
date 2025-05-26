@@ -4,9 +4,12 @@ Este é um projeto pessoal desenvolvido como parte do meu aperfeiçoamento em **
 
 ## 🖥️ Demonstração
 
-<img src="https://drive.google.com/file/d/1EDK4lUfSUuMRW4hhAGtewnzfNAJ123I5/view?usp=sharing" alt="Tela inicial do portfólio">
-<img src="https://drive.google.com/file/d/1sYo9frIckgagcTvXKHNiJNXbBBSRduPB/view?usp=sharing" alt="Lista de projetos">
-<img src="https://drive.google.com/file/d/1DORCejNleWqlVxzcT4spkkll-iiCpS_y/view?usp=sharing" alt="Detalhes do projeto SGE">
+### 🌐 Pagina Home
+![screencapture-home-portfolio-django](https://github.com/user-attachments/assets/82e6c59a-31d7-4a68-9ff4-f92b2c00f0f5)
+### 📋 Pagina de Lista de projetos feitos
+![screencapture-project-list-portfolio-django](https://github.com/user-attachments/assets/f35ef9e1-6b52-44d4-82d9-fe1f362a161f)
+### 🙂 Páginas de detalhes de um projeto
+![screencapture-project-detail-portfolio-django](https://github.com/user-attachments/assets/5a10a49b-674f-4de8-8ee2-d40818d89b8b)
 
 > ✅ Você pode visualizar o projeto completo rodando no seu navegador clonando o repositório e executando localmente.
 
@@ -62,6 +65,6 @@ python manage.py runserver
 Me chamo Silvano Charão Dias Junior, sou Web Developer com experiência em desenvolvimento full-stack. 
 Apaixonado por tecnologia, sempre buscando criar soluções digitais inovadoras e funcionais.
 
-📬 Contato: contato@silvanodiasjr.com.br
+📬 Contato: [contato@silvanodiasjr.com.br](contato@silvanodiasjr.com.br)
 🔗 LinkedIn: [linkedin Silvano Charão Dias Junior](https://www.linkedin.com/in/silvano-char%C3%A3o-dias-junior-99766216a/)
 
