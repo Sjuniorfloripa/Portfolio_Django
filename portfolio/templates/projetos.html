@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% block title %}Lista De Projetos{% endblock title %}
+{% block content %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: linear-gradient(135deg, var(--accent-color) 0%, rgba(253, 240, 213, 0.3) 100%);
+        border-radius: var(--border-radius);
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-description {
+        font-size: 1.1rem;
+        color: var(--gray-medium);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .project-card {
+        background: var(--white);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: var(--transition);
+        border: 1px solid #e9ecef;
+    }
+
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+    }
+
+    .project-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.1) 10px,
+            rgba(255, 255, 255, 0.1) 20px
+        );
+        animation: slide 20s linear infinite;
+    }
+
+    @keyframes slide {
+        0% { transform: translateX(-50px) translateY(-50px); }
+        100% { transform: translateX(50px) translateY(50px); }
+    }
+
+    .project-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .project-icon i {
+        font-size: 2rem;
+        color: var(--white);
+    }
+
+    .project-number {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+        z-index: 1;
+    }
+
+    .project-content {
+        padding: 2rem;
+    }
+
+    .project-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .project-title {
+        font-size: 1.3rem;
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .project-card:hover .project-title {
+        color: var(--primary-color);
+    }
+
+    .project-description {
+        color: var(--gray-medium);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .project-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .view-project {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        font-weight: 500;
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .view-project:hover {
+        color: var(--secondary-color);
+        transform: translateX(5px);
+    }
+
+    .project-status {
+        background: var(--accent-color);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--gray-medium);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: var(--light-blue);
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .projects-container {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-header {
+            padding: 1.5rem;
+        }
+    }
+
+    /* Animações */
+    .project-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .project-card:nth-child(2) { animation-delay: 0.1s; }
+    .project-card:nth-child(3) { animation-delay: 0.2s; }
+    .project-card:nth-child(4) { animation-delay: 0.3s; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Meus Projetos</h1>
+    <p class="page-description">
+        Projetos que desenvolvi com dedicação e criatividade. Cada um representa um desafio superado e conhecimento adquirido.
+    </p>
+</div>
+
+{% if projetos %}
+    <div class="projects-container">
+        {% for key, info in projetos.items %}
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-number">{{ forloop.counter }}</div>
+                    <div class="project-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <a href="{% url 'detalhes_projeto' id=key %}" class="project-link">
+                        <h3 class="project-title">{{ info.titulo }}</h3>
+                    </a>
+                    <p class="project-description">
+                        Clique para ver mais detalhes sobre este projeto, incluindo tecnologias utilizadas e repositório no GitHub.
+                    </p>
+                    <div class="project-footer">
+                        <a href="{% url 'detalhes_projeto' id=key %}" class="view-project">
+                            <i class="fas fa-arrow-right"></i>
+                            Ver Detalhes
+                        </a>
+                        <span class="project-status">Concluído</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <i class="fas fa-folder-open"></i>
+        <h3>Nenhum projeto encontrado</h3>
+        <p>Os projetos serão exibidos aqui quando estiverem disponíveis.</p>
+    </div>
+{% endif %}
+{% endblock content %}

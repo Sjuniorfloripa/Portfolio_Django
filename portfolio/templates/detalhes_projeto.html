@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+{% block title %}{{projeto.titulo}}{% endblock title %}
+{% block content %}
+<style>
+    .project-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
+        padding: 3rem 2rem;
+        border-radius: var(--border-radius);
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+        background-size: 50px 50px;
+        animation: float 20s linear infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px) translateX(0px); }
+        50% { transform: translateY(-20px) translateX(10px); }
+        100% { transform: translateY(0px) translateX(0px); }
+    }
+
+    .project-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+    }
+
+    .project-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--primary-color);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+    }
+
+    .back-button:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        transform: translateX(-5px);
+    }
+
+    .project-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .main-content {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .info-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+
+    .info-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        color: var(--dark-blue);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .card-title i {
+        color: var(--primary-color);
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        color: var(--dark-blue);
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    .section-title i {
+        color: var(--primary-color);
+    }
+
+    .project-description {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--gray-medium);
+        margin-bottom: 2rem;
+    }
+
+    .tech-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .tech-tag {
+        background: var(--accent-color);
+        color: var(--primary-color);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid var(--primary-color);
+    }
+
+    .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--dark-blue);
+        color: var(--white);
+        padding: 1rem 1.5rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        margin-top: 1rem;
+    }
+
+    .github-link:hover {
+        background: var(--light-blue);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .github-link i {
+        font-size: 1.2rem;
+    }
+
+    .project-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background: var(--gray-light);
+        border-radius: var(--border-radius);
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--gray-medium);
+        margin-top: 0.3rem;
+    }
+
+    .project-features {
+        margin-top: 2rem;
+    }
+
+    .features-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .features-list li {
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .features-list li:last-child {
+        border-bottom: none;
+    }
+
+    .features-list i {
+        color: var(--primary-color);
+        width: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .project-content {
+            grid-template-columns: 1fr;
+        }
+
+        .project-title {
+            font-size: 2rem;
+        }
+
+        .main-content,
+        .info-card {
+            padding: 1.5rem;
+        }
+
+        .project-header {
+            padding: 2rem 1rem;
+        }
+
+        .project-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    /* Animações */
+    .main-content,
+    .info-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .info-card:nth-child(2) { animation-delay: 0.1s; }
+    .info-card:nth-child(3) { animation-delay: 0.2s; }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<a href="{% url 'projetos' %}" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+    Voltar aos Projetos
+</a>
+
+<div class="project-header">
+    <h1 class="project-title">{{ projeto.titulo }}</h1>
+    <p class="project-subtitle">Detalhes completos do projeto</p>
+</div>
+
+<div class="project-content">
+    <div class="main-content">
+        <h2 class="section-title">
+            <i class="fas fa-info-circle"></i>
+            Detalhes do projeto
+        </h2>
+        <p class="project-description">{{ projeto.descricao }}</p>
+
+        <div class="project-features">
+            <h3 class="card-title">
+                <i class="fas fa-star"></i>
+                Características Principais
+            </h3>
+            <ul class="features-list">
+                <li>
+                    <i class="fas fa-check"></i>
+                    Interface moderna e responsiva
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    Código limpo e bem documentado
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    Boas práticas de desenvolvimento
+                </li>
+                <li>
+                    <i class="fas fa-check"></i>
+                    Otimizado para performance
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="info-card">
+            <h3 class="card-title">
+                <i class="fas fa-cogs"></i>
+                Tecnologias
+            </h3>
+            <p>{{ projeto.tecnologia }}</p>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title">
+                <i class="fab fa-github"></i>
+                Repositório
+            </h3>
+            <p>Acesse o código fonte completo no GitHub</p>
+            <a href="{{ projeto.github }}" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                Repositório Aqui
+            </a>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title">
+                <i class="fas fa-chart-bar"></i>
+                Estatísticas
+            </h3>
+            <div class="project-stats">
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Concluído</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">A+</span>
+                    <span class="stat-label">Qualidade</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
