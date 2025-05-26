@@ -32,7 +32,6 @@ Projeto pessoal de treino para aprimorar habilidades com a ferramenta **Django**
 
 - Python
 - Django
-- PostgreSQL
 - DTL (Django Template Language)
 - HTML5 & CSS3
 
