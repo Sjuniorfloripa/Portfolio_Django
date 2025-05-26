@@ -64,6 +64,6 @@ python manage.py runserver
 Me chamo Silvano Charão Dias Junior, sou Web Developer com experiência em desenvolvimento full-stack. 
 Apaixonado por tecnologia, sempre buscando criar soluções digitais inovadoras e funcionais.
 
-📬 Contato: [contato@silvanodiasjr.com.br](contato@silvanodiasjr.com.br)
+📬 Contato: [contato@silvanodiasjr.com.br](mailto:contato@silvanodiasjr.com.br)
 🔗 LinkedIn: [linkedin Silvano Charão Dias Junior](https://www.linkedin.com/in/silvano-char%C3%A3o-dias-junior-99766216a/)
 
